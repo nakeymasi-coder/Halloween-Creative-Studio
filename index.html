@@ -1,0 +1,1178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halloween Creative Studio</title>
+    <style>
+      :root {
+        --bg: #0f0f14;
+        --panel: #171720;
+        --panel2: #20202a;
+        --text: #ffffff;
+        --muted: #b8b8c7;
+        --orange: #ff7a00;
+        --purple: #8b5cf6;
+        --pink: #ff4fb3;
+        --green: #7bf59a;
+        --border: #323241;
+        --shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at 15% 10%,
+            rgba(139, 92, 246, 0.15),
+            transparent 25%
+          ),
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(255, 122, 0, 0.12),
+            transparent 28%
+          ),
+          var(--bg);
+        color: var(--text);
+      }
+      .app {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .hero {
+        border: 1px solid var(--border);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 122, 0, 0.11),
+          rgba(139, 92, 246, 0.1),
+          rgba(255, 79, 179, 0.08)
+        );
+        border-radius: 26px;
+        padding: 28px;
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+      }
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #ffd2a8;
+        font-weight: 800;
+      }
+      h1 {
+        margin: 8px 0 8px;
+        font-size: clamp(34px, 5vw, 62px);
+        line-height: 0.95;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 850px;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+        position: sticky;
+        top: 10px;
+        z-index: 20;
+        background: rgba(15, 15, 20, 0.88);
+        backdrop-filter: blur(14px);
+        border: 1px solid var(--border);
+        padding: 12px;
+        border-radius: 18px;
+      }
+      button {
+        border: none;
+        border-radius: 12px;
+        padding: 11px 15px;
+        font-weight: 800;
+        cursor: pointer;
+        background: var(--panel2);
+        color: #fff;
+        border: 1px solid var(--border);
+        transition: 0.2s ease;
+      }
+      button:hover {
+        transform: translateY(-1px);
+        border-color: #57576c;
+      }
+      .primary {
+        background: linear-gradient(135deg, var(--orange), #ff9f43);
+        color: #17120c;
+        border: none;
+      }
+      .accent {
+        background: linear-gradient(135deg, var(--purple), #6d4fe2);
+        border: none;
+      }
+      .pink {
+        background: linear-gradient(135deg, var(--pink), #d92f8e);
+        border: none;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .section {
+        background: rgba(23, 23, 32, 0.96);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 18px;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+      }
+      .section.full {
+        grid-column: 1/-1;
+      }
+      .section h2 {
+        font-size: 18px;
+        margin: 0 0 4px;
+      }
+      .section .desc {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+      .fields {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .field {
+        position: relative;
+      }
+      .label-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+      label {
+        font-size: 12px;
+        font-weight: 800;
+        color: #e8e8ef;
+      }
+      .lockbtn {
+        padding: 5px 8px;
+        font-size: 11px;
+        border-radius: 8px;
+        background: #121219;
+      }
+      .lockbtn.locked {
+        border-color: var(--orange);
+        color: #ffd7b0;
+      }
+      select,
+      .multi-btn,
+      input[type="text"],
+      textarea {
+        width: 100%;
+        background: #111118;
+        border: 1px solid var(--border);
+        color: #fff;
+        border-radius: 12px;
+        padding: 11px 12px;
+        outline: none;
+      }
+      select:focus,
+      .multi-btn:focus,
+      textarea:focus,
+      input:focus {
+        border-color: #6b6b88;
+      }
+      .multi-btn {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        text-align: left;
+        min-height: 43px;
+      }
+      .multi-menu {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: calc(100% + 6px);
+        max-height: 270px;
+        overflow: auto;
+        background: #111118;
+        border: 1px solid #434355;
+        border-radius: 12px;
+        padding: 8px;
+        z-index: 50;
+        box-shadow: var(--shadow);
+      }
+      .multi-menu.open {
+        display: block;
+      }
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 8px;
+        color: #e8e8ef;
+        font-size: 13px;
+      }
+      .opt:hover {
+        background: #1d1d27;
+      }
+      .opt input {
+        accent-color: var(--orange);
+      }
+      .output-wrap {
+        margin-top: 20px;
+      }
+      #output {
+        min-height: 520px;
+        white-space: pre-wrap;
+        line-height: 1.55;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+      .tip {
+        margin-top: 14px;
+        padding: 12px 14px;
+        border: 1px dashed #4a4a5f;
+        border-radius: 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .count-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #24170c;
+        color: #ffd2ad;
+        border: 1px solid #5e3214;
+        padding: 6px 9px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+        margin-top: 10px;
+      }
+      @media (max-width: 900px) {
+        .grid,
+        .fields {
+          grid-template-columns: 1fr;
+        }
+        .section.full {
+          grid-column: auto;
+        }
+        .toolbar {
+          position: static;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <section class="hero">
+        <div class="eyebrow">Premium Halloween Prompt Generator</div>
+        <h1>Halloween Creative Studio</h1>
+        <p>
+          Create premium Halloween backgrounds, patterns, stickers, and elements
+          with beginner-friendly controls. Every generation builds a coordinated
+          set of exactly 10 separate standalone design prompts.
+        </p>
+        <div class="count-badge">
+          10 separate prompts • 10 separate canvases • never a collage
+        </div>
+      </section>
+
+      <div class="toolbar">
+        <button class="primary" id="generateBtn">Generate Prompt</button>
+        <button id="copyBtn">Copy Prompt</button>
+        <button class="accent" id="remixBtn">Remix</button>
+        <button class="pink" id="surpriseBtn">Surprise Me</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+
+      <div class="grid">
+        <section class="section full">
+          <h2>1. Start Here</h2>
+          <div class="desc">
+            Choose your generator type and a Halloween preset. Everything starts
+            at None.
+          </div>
+          <div class="fields">
+            <div class="field" data-key="designType">
+              <div class="label-row">
+                <label>Design Type</label
+                ><button class="lockbtn">🔓 Lock</button>
+              </div>
+              <select>
+                <option>None</option>
+                <option>Halloween Background</option>
+                <option>Halloween Pattern</option>
+                <option>Halloween Sticker Design</option>
+                <option>Halloween Element</option>
+              </select>
+            </div>
+            <div class="field" data-key="preset">
+              <div class="label-row">
+                <label>Preset</label><button class="lockbtn">🔓 Lock</button>
+              </div>
+              <select id="presetSelect"></select>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>2. Core Concept</h2>
+          <div class="desc">
+            Pick the visual world, characters, objects, and theme.
+          </div>
+          <div class="fields" id="coreFields"></div>
+        </section>
+
+        <section class="section">
+          <h2>3. Style & Mood</h2>
+          <div class="desc">Control the overall artistic direction.</div>
+          <div class="fields" id="styleFields"></div>
+        </section>
+
+        <section class="section">
+          <h2>4. Color, Material & Finish</h2>
+          <div class="desc">
+            Layer color, surfaces, texture, glow, and premium materials.
+          </div>
+          <div class="fields" id="finishFields"></div>
+        </section>
+
+        <section class="section">
+          <h2>5. Composition & Background</h2>
+          <div class="desc">
+            Choose how the finished artwork is arranged and framed.
+          </div>
+          <div class="fields" id="compositionFields"></div>
+        </section>
+
+        <section class="section">
+          <h2>6. Typography & Details</h2>
+          <div class="desc">Optional text styling and decorative accents.</div>
+          <div class="fields" id="detailFields"></div>
+        </section>
+
+        <section class="section">
+          <h2>7. Output Settings</h2>
+          <div class="desc">
+            Set orientation, transparency, and aspect ratio.
+          </div>
+          <div class="fields" id="outputFields"></div>
+        </section>
+      </div>
+
+      <section class="section output-wrap">
+        <h2>Generated Halloween Prompt</h2>
+        <div class="desc">
+          The output includes a master direction plus Design 1 through Design 10
+          as separate image-generation jobs.
+        </div>
+        <textarea
+          id="output"
+          placeholder="Your generated prompt will appear here..."
+        ></textarea>
+        <div class="tip">
+          Tip: Use the lock buttons to keep favorite settings while Remix or
+          Surprise Me changes everything else.
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const presets = [
+        "None",
+        "Cute Halloween",
+        "Glam Halloween",
+        "Spooky Cute",
+        "Gothic Glam",
+        "Candy Halloween",
+        "Pastel Halloween",
+        "Neon Halloween",
+        "Retro Halloween",
+        "Vintage Halloween",
+        "Luxury Halloween",
+        "Whimsical Halloween",
+        "Dark Feminine Halloween",
+        "Kawaii Halloween",
+        "Cartoon Halloween",
+        "Editorial Halloween",
+        "Halloween Bakery",
+        "Haunted Boutique",
+        "Ghost Fashion",
+        "Witchy Beauty",
+        "Monster Candy Shop",
+        "Pumpkin Disco",
+        "Skeleton Glam",
+        "Halloween Carnival",
+        "Haunted Toy Shop",
+        "Spooky Dessert Bar",
+        "Halloween Fashion House",
+        "Midnight Candy Run",
+        "Velvet Vampire Lounge",
+        "Ghostly Tea Party",
+        "Pumpkin Perfume Atelier",
+        "Haunted Dollhouse Couture",
+        "Black Cat Beauty Bar",
+        "Candy Corn Cabaret",
+        "Spooky Paris Café",
+        "Witch Hat Millinery Shop",
+        "Monster Nail Salon",
+        "Moonlit Pumpkin Garden",
+        "Ghost Glam Sleepover",
+        "Skeleton Supper Club",
+        "Haunted Jewelry Box",
+        "Potion Bottle Bakery",
+        "Pastel Graveyard Picnic",
+        "Vampire Vanity Room",
+        "Bat Wing Ballroom",
+        "Pumpkin Patch Runway",
+        "Haunted Candy Hotel",
+        "Ghost Bride Boutique",
+        "Spooky Ice Cream Parlor",
+        "Witchy Bookshop",
+        "Monster Makeup Counter",
+        "Pumpkin Spa Day",
+        "Halloween Flower Market",
+        "Coffin Shaped Candy Store",
+        "Ghostly Record Shop",
+        "Haunted Roller Rink",
+        "Skeleton Beauty School",
+        "Moonlit Apothecary",
+        "Candy Cauldron Kitchen",
+        "Spooky Soda Fountain",
+        "Pumpkin Glasshouse",
+        "Vampire Dessert Cart",
+        "Glam Graveyard Garden",
+        "Haunted Handbag Shop",
+        "Witchy Perfume Lab",
+        "Ghost Disco Motel",
+        "Monster Donut Shop",
+        "Pumpkin Beauty Counter",
+        "Skeleton Tea Room",
+        "Pastel Potion Party",
+        "Midnight Mask Boutique",
+        "Candy Bat Bakery",
+        "Haunted Champagne Bar",
+        "Ghostly Nail Studio",
+        "Witch Hat Candy Factory",
+        "Pumpkin Crystal Conservatory",
+        "Spooky Fashion Magazine",
+        "Skeleton Flower Shop",
+        "Black Cat Patisserie",
+        "Monster Jewelry Atelier",
+        "Haunted Vanity Collection",
+        "Velvet Pumpkin Palace",
+        "Candy Ghost Arcade",
+        "Witchy Candle Studio",
+        "Pastel Vampire Picnic",
+        "Ghost Shopping District",
+        "Halloween Luxury Hotel",
+        "Pumpkin Moon Café",
+        "Skeleton Sewing Room",
+        "Bat Beauty Boutique",
+        "Haunted Dessert Museum",
+        "Monster Perfume House",
+        "Candy Corn Fashion Week",
+        "Spooky Toy Parade",
+        "Ghost Spa Retreat",
+        "Witchy Chocolate Shop",
+        "Pumpkin Party Penthouse",
+        "Midnight Halloween Market",
+        "Velvet Ghost Theater",
+        "Skeleton Candy Laboratory",
+        "Haunted Floral Studio",
+        "Halloween Glam Dollhouse",
+        "Black Cat Champagne Lounge",
+        "Pumpkin Pop Art Gallery",
+        "Ghostly Fashion Closet",
+        "Monster Sweet Shop",
+        "Pastel Haunted Greenhouse",
+      ];
+
+      const fieldSets = {
+        coreFields: {
+          "Main Subject": [
+            "Pumpkin",
+            "Ghost",
+            "Witch",
+            "Black Cat",
+            "Skeleton",
+            "Bat",
+            "Potion Bottle",
+            "Cauldron",
+            "Candy Corn",
+            "Haunted Cake",
+            "Magic Mirror",
+            "Coffin Purse",
+            "Pumpkin Perfume Bottle",
+            "Ghost Handbag",
+            "Skeleton Pastry",
+            "Monster Cupcake",
+            "Crystal Ball",
+            "Haunted Vanity",
+            "Spooky Floral Arrangement",
+            "Mini Haunted Shop",
+          ],
+          "Halloween Character": [
+            "Friendly Ghost",
+            "Glam Witch",
+            "Fashion Skeleton",
+            "Sassy Black Cat",
+            "Candy Monster",
+            "Mini Vampire",
+            "Pumpkin Diva",
+            "Ghost Baker",
+            "Skeleton Stylist",
+            "Witch Florist",
+            "Monster Barista",
+          ],
+          "Halloween Object": [
+            "Cauldron",
+            "Potion",
+            "Broom",
+            "Lantern",
+            "Candle",
+            "Magic Mirror",
+            "Spell Book",
+            "Candy Bucket",
+            "Coffin Box",
+            "Perfume Bottle",
+            "Handbag",
+            "Cake Stand",
+            "Teacup",
+            "Vanity Tray",
+          ],
+          "Halloween Creature": [
+            "Bat",
+            "Spider",
+            "Black Cat",
+            "Raven",
+            "Ghost",
+            "Mini Monster",
+            "Snake",
+            "Moth",
+            "Fantasy Halloween Creature",
+          ],
+          Theme: [
+            "Haunted Boutique",
+            "Halloween Bakery",
+            "Spooky Fashion",
+            "Candy World",
+            "Potion Lab",
+            "Midnight Garden",
+            "Ghost Party",
+            "Luxury Haunted Hotel",
+            "Monster Market",
+            "Halloween Beauty Bar",
+          ],
+        },
+        styleFields: {
+          Aesthetic: [
+            "Glam",
+            "Spooky Cute",
+            "Luxury",
+            "Pastel",
+            "Neon",
+            "Retro",
+            "Vintage",
+            "Gothic",
+            "Dark Feminine",
+            "Kawaii",
+            "Whimsical",
+            "Editorial",
+            "Candy-Coated",
+            "Maximalist",
+            "Minimal Luxe",
+          ],
+          "Art Style": [
+            "Glossy 3D",
+            "Polished Illustration",
+            "Painterly Digital Art",
+            "Editorial Collage",
+            "Cartoon Realism",
+            "Clay Render",
+            "Paper Cut",
+            "Vector-Inspired",
+            "Vintage Print",
+            "Soft Airbrush",
+          ],
+          Mood: [
+            "Playful",
+            "Mysterious",
+            "Cute",
+            "Bold",
+            "Elegant",
+            "Campy",
+            "Dreamy",
+            "Moody",
+            "Cheeky",
+            "Magical",
+            "Dramatic",
+          ],
+          "Color Palette": [
+            "Orange + Black + White",
+            "Hot Pink + Orange + Black",
+            "Lavender + Peach + Cream",
+            "Neon Green + Purple + Black",
+            "Candy Pink + Teal + Orange",
+            "Black + Metallic Gold + Orange",
+            "Pastel Rainbow Halloween",
+            "Red + Black + Plum",
+            "Mint + Lilac + Peach",
+            "Cream + Mocha + Burnt Orange",
+          ],
+        },
+        finishFields: {
+          Texture: [
+            "Smooth",
+            "Velvet",
+            "Sugar-Coated",
+            "Glitter",
+            "Frosted Glass",
+            "Satin",
+            "Embossed",
+            "Marbled",
+            "Candy Gloss",
+            "Cracked Ceramic",
+          ],
+          "Surface Finish": [
+            "Glossy",
+            "Matte",
+            "Metallic",
+            "Holographic",
+            "Jelly",
+            "Chrome",
+            "Vinyl",
+            "Pearlescent",
+            "Glass",
+            "Lacquered",
+          ],
+          Material: [
+            "Glass",
+            "Acrylic",
+            "Ceramic",
+            "Velvet",
+            "Metal",
+            "Candy",
+            "Frosting",
+            "Paper",
+            "Vinyl",
+            "Resin",
+            "Fabric",
+            "Crystal",
+          ],
+          Lighting: [
+            "Soft Studio",
+            "Orange Rim Light",
+            "Purple Glow",
+            "Candlelit",
+            "Backlit Glow",
+            "Neon Accent",
+            "Moonlit",
+            "Editorial Spotlight",
+            "Warm Ambient",
+          ],
+          Glow: [
+            "None",
+            "Soft Glow",
+            "Neon Glow",
+            "Candle Glow",
+            "Moon Glow",
+            "Candy Glow",
+            "Bioluminescent",
+            "Edge Glow",
+          ],
+        },
+        compositionFields: {
+          Composition: [
+            "Centered Hero",
+            "Full Bleed",
+            "Floating Product Layout",
+            "Editorial Still Life",
+            "Symmetrical",
+            "Asymmetrical Luxe",
+            "Layered Scene",
+            "Flat Lay",
+            "Close-Up Macro",
+            "Pattern-Focused",
+          ],
+          Layout: [
+            "Minimal",
+            "Balanced",
+            "Dense but Clean",
+            "Scattered",
+            "Grid-Inspired",
+            "Vertical Stack",
+            "Diagonal Flow",
+            "Circular Arrangement",
+          ],
+          "Background Style": [
+            "None",
+            "Solid Color",
+            "Gradient",
+            "Haunted Boutique Interior",
+            "Luxury Vanity",
+            "Candy Shop",
+            "Moonlit Garden",
+            "Reflective Floor",
+            "Soft Studio",
+            "Patterned Wallpaper",
+            "Foggy Street",
+            "Spooky Bakery",
+          ],
+          "Pattern Style": [
+            "None",
+            "Seamless Repeat",
+            "Non-Repeating Decorative",
+            "Tossed Repeat",
+            "Half-Drop Repeat",
+            "Symmetrical Repeat",
+            "Dense Micro Pattern",
+            "Large Motif Repeat",
+          ],
+          Borders: [
+            "None",
+            "White Border",
+            "Colored Border",
+            "Metallic Border",
+            "Scalloped",
+            "Wavy",
+            "Vintage Frame",
+            "Glossy Outline",
+          ],
+          Frames: [
+            "None",
+            "Ornate Gothic",
+            "Minimal Thin",
+            "Candy Frame",
+            "Pumpkin Vine Frame",
+            "Ghost Frame",
+            "Floral Halloween Frame",
+          ],
+        },
+        detailFields: {
+          "Typography Style": [
+            "None",
+            "Chunky Serif",
+            "Bold Sans Serif",
+            "Retro Bubble",
+            "Elegant Serif",
+            "Gothic Serif",
+            "Hand Lettered",
+            "Candy Typography",
+          ],
+          "Text Treatment": [
+            "None",
+            "Flat",
+            "3D Glass",
+            "Metallic",
+            "Jelly",
+            "Glow",
+            "Embossed",
+            "Glitter",
+            "Chrome",
+          ],
+          "Decorative Elements": [
+            "Bats",
+            "Ghosts",
+            "Candy Corn",
+            "Pumpkins",
+            "Stars",
+            "Moons",
+            "Spiders",
+            "Ribbons",
+            "Pearls",
+            "Mini Florals",
+            "Candy Sprinkles",
+            "Wax Drips",
+          ],
+          "Supporting Elements": [
+            "Candles",
+            "Perfume Bottles",
+            "Mini Cakes",
+            "Candy Bags",
+            "Flowers",
+            "Potion Bottles",
+            "Tea Cups",
+            "Handbags",
+            "Shoes",
+            "Jewelry",
+            "Books",
+          ],
+          "Seasonal Props": [
+            "Jack-o'-Lanterns",
+            "Candy Buckets",
+            "Broomsticks",
+            "Spell Books",
+            "Pumpkin Garlands",
+            "Costume Masks",
+            "Lanterns",
+            "Mini Coffins",
+          ],
+          "Magical Effects": [
+            "Sparkles",
+            "Floating Dust",
+            "Potion Mist",
+            "Glowing Stars",
+            "Magic Swirls",
+            "Tiny Floating Ghosts",
+          ],
+          "Spooky Effects": [
+            "Fog",
+            "Soft Smoke",
+            "Wax Drips",
+            "Cracked Surfaces",
+            "Shadow Shapes",
+            "Cobweb Accents",
+          ],
+        },
+        outputFields: {
+          "Sticker Finish": [
+            "None",
+            "Glossy Vinyl",
+            "Matte Vinyl",
+            "Holographic",
+            "Glitter",
+            "Metallic",
+            "Jelly",
+            "Dimensional",
+          ],
+          "Cut-Line Style": [
+            "None",
+            "Clean White Cut Line",
+            "Colored Cut Line",
+            "Thin Cut Line",
+            "Thick Cut Line",
+          ],
+          "Background Transparency": [
+            "None",
+            "Opaque",
+            "Transparent",
+            "Transparent-Background Ready",
+          ],
+          "Image Orientation": [
+            "None",
+            "Square",
+            "Portrait",
+            "Landscape",
+            "Vertical",
+            "Horizontal",
+          ],
+          "Aspect Ratio": [
+            "None",
+            "1:1",
+            "3:4",
+            "4:5",
+            "2:3",
+            "9:16",
+            "16:9",
+            "21:9",
+          ],
+        },
+      };
+
+      const locked = new Set();
+      const selections = {};
+
+      function makeMultiField(label, options) {
+        const key = label;
+        selections[key] = [];
+        const wrap = document.createElement("div");
+        wrap.className = "field";
+        wrap.dataset.key = key;
+        wrap.innerHTML = `
+    <div class="label-row">
+      <label>${label}</label>
+      <button class="lockbtn">🔓 Lock</button>
+    </div>
+    <button type="button" class="multi-btn"><span>None</span><span>▾</span></button>
+    <div class="multi-menu"></div>`;
+        const menu = wrap.querySelector(".multi-menu");
+        const all = ["None", ...options];
+        all.forEach((opt, i) => {
+          const row = document.createElement("label");
+          row.className = "opt";
+          row.innerHTML = `<input type="checkbox" value="${opt}"> <span>${opt}</span>`;
+          menu.appendChild(row);
+        });
+        const btn = wrap.querySelector(".multi-btn");
+        btn.addEventListener("click", () => menu.classList.toggle("open"));
+        menu.addEventListener("change", (e) => {
+          if (!e.target.matches("input")) return;
+          const val = e.target.value;
+          if (val === "None" && e.target.checked) {
+            menu.querySelectorAll("input").forEach((x) => {
+              if (x.value !== "None") x.checked = false;
+            });
+          } else if (val !== "None" && e.target.checked) {
+            const none = menu.querySelector('input[value="None"]');
+            if (none) none.checked = false;
+          }
+          const vals = [...menu.querySelectorAll("input:checked")]
+            .map((x) => x.value)
+            .filter((v) => v !== "None");
+          selections[key] = vals;
+          btn.querySelector("span").textContent = vals.length
+            ? vals.join(", ")
+            : "None";
+        });
+        wrap
+          .querySelector(".lockbtn")
+          .addEventListener("click", (e) => toggleLock(key, e.currentTarget));
+        return wrap;
+      }
+
+      Object.entries(fieldSets).forEach(([containerId, fields]) => {
+        const c = document.getElementById(containerId);
+        Object.entries(fields).forEach(([label, opts]) =>
+          c.appendChild(makeMultiField(label, opts)),
+        );
+      });
+
+      const presetSelect = document.getElementById("presetSelect");
+      presets.forEach((p) => {
+        const o = document.createElement("option");
+        o.textContent = p;
+        presetSelect.appendChild(o);
+      });
+
+      document.querySelectorAll(".section.full .field").forEach((f) => {
+        const key = f.dataset.key;
+        f.querySelector(".lockbtn").addEventListener("click", (e) =>
+          toggleLock(key, e.currentTarget),
+        );
+      });
+
+      function toggleLock(key, btn) {
+        if (locked.has(key)) {
+          locked.delete(key);
+          btn.textContent = "🔓 Lock";
+          btn.classList.remove("locked");
+        } else {
+          locked.add(key);
+          btn.textContent = "🔒 Locked";
+          btn.classList.add("locked");
+        }
+      }
+
+      function getSingle(key) {
+        const f = document.querySelector(`.field[data-key="${key}"] select`);
+        return f ? f.value : "None";
+      }
+      function getVal(label) {
+        const arr = selections[label] || [];
+        return arr.length ? arr.join(", ") : "None";
+      }
+      function setRandomMulti(field) {
+        const key = field.dataset.key;
+        if (locked.has(key)) return;
+        const boxes = [...field.querySelectorAll(".multi-menu input")].filter(
+          (x) => x.value !== "None",
+        );
+        boxes.forEach((x) => (x.checked = false));
+        const count = Math.random() < 0.5 ? 1 : Math.min(2, boxes.length);
+        const chosen = [...boxes]
+          .sort(() => Math.random() - 0.5)
+          .slice(0, count);
+        chosen.forEach((x) => (x.checked = true));
+        const vals = chosen.map((x) => x.value);
+        selections[key] = vals;
+        field.querySelector(".multi-btn span").textContent = vals.length
+          ? vals.join(", ")
+          : "None";
+      }
+      function randomize() {
+        const ds = document.querySelector('[data-key="designType"] select');
+        const ps = document.querySelector('[data-key="preset"] select');
+        if (!locked.has("designType"))
+          ds.selectedIndex =
+            1 + Math.floor(Math.random() * (ds.options.length - 1));
+        if (!locked.has("preset"))
+          ps.selectedIndex =
+            1 + Math.floor(Math.random() * (ps.options.length - 1));
+        document
+          .querySelectorAll(".field .multi-menu")
+          .forEach((menu) => setRandomMulti(menu.closest(".field")));
+      }
+
+      function resetAll() {
+        document
+          .querySelectorAll("select")
+          .forEach((s) => (s.selectedIndex = 0));
+        document
+          .querySelectorAll(".multi-menu input")
+          .forEach((x) => (x.checked = false));
+        document
+          .querySelectorAll(".multi-btn span:first-child")
+          .forEach((s) => (s.textContent = "None"));
+        Object.keys(selections).forEach((k) => (selections[k] = []));
+        locked.clear();
+        document.querySelectorAll(".lockbtn").forEach((b) => {
+          b.textContent = "🔓 Lock";
+          b.classList.remove("locked");
+        });
+        document.getElementById("output").value = "";
+      }
+
+      function buildPrompt(remix = false) {
+        const designType = getSingle("designType");
+        const preset = getSingle("preset");
+        const fields = [
+          "Main Subject",
+          "Halloween Character",
+          "Halloween Object",
+          "Halloween Creature",
+          "Theme",
+          "Aesthetic",
+          "Art Style",
+          "Mood",
+          "Color Palette",
+          "Texture",
+          "Surface Finish",
+          "Material",
+          "Lighting",
+          "Glow",
+          "Composition",
+          "Layout",
+          "Background Style",
+          "Pattern Style",
+          "Borders",
+          "Frames",
+          "Typography Style",
+          "Text Treatment",
+          "Decorative Elements",
+          "Supporting Elements",
+          "Seasonal Props",
+          "Magical Effects",
+          "Spooky Effects",
+          "Sticker Finish",
+          "Cut-Line Style",
+          "Background Transparency",
+          "Image Orientation",
+          "Aspect Ratio",
+        ];
+        const data = {};
+        fields.forEach((k) => (data[k] = getVal(k)));
+
+        const lines = [];
+        lines.push(`HALLOWEEN CREATIVE STUDIO — 10 DESIGN COLLECTION`);
+        lines.push(``);
+        lines.push(
+          `Create exactly 10 separate, standalone Halloween designs based on the following selected direction.`,
+        );
+        lines.push(``);
+        lines.push(`DESIGN TYPE: ${designType}`);
+        lines.push(`PRESET: ${preset}`);
+        fields.forEach((k) => lines.push(`${k.toUpperCase()}: ${data[k]}`));
+        lines.push(``);
+        lines.push(`MASTER CREATIVE DIRECTION`);
+        lines.push(
+          `Create premium, high-resolution, professional, commercially appealing Halloween artwork with a polished, bright, colorful, detailed, playful, unexpected, scroll-stopping digital-product aesthetic. The work should feel Etsy-ready and Pinterest-worthy without copying existing designs. Prioritize unusual combinations, premium styling, clean compositions, strong visual storytelling, and concepts people would want to save, share, print, or purchase.`,
+        );
+        lines.push(``);
+        if (data["Pattern Style"].toLowerCase().includes("seamless")) {
+          lines.push(
+            `PATTERN RULE: Create a true seamless repeating pattern with perfectly clean tile edges and no visible seams.`,
+          );
+          lines.push(``);
+        }
+        if (designType.includes("Sticker")) {
+          lines.push(
+            `STICKER RULES: Use clean silhouettes, strong readability, professional spacing, clear cut lines, and prevent stickers from touching or overlapping unless specifically selected. Keep each finished sticker standalone.`,
+          );
+          lines.push(``);
+        }
+        lines.push(`QUALITY PROTECTION`);
+        lines.push(
+          `Avoid blurry images, pixelation, muddy colors, warped anatomy or objects, duplicated objects, accidental text, misspelled wording, random letters, watermarks, logos, cropped subjects, messy compositions, unintended overlaps, low-resolution details, generic stock-art appearance, and obvious AI artifacts.`,
+        );
+        lines.push(
+          `If typography is used, all visible wording must be correctly spelled, fully visible, readable, unobstructed, and professionally integrated.`,
+        );
+        lines.push(``);
+        lines.push(`IMPORTANT OUTPUT RULE`);
+        lines.push(
+          `Generate these as 10 separate image-generation jobs. Design 1 is one image. Design 2 is another image. Continue separately through Design 10. Never combine the finished designs onto one canvas. Never create a collage, contact sheet, mood board, comparison board, or multi-image grid.`,
+        );
+        lines.push(``);
+        lines.push(`10 INDIVIDUAL DESIGN PROMPTS`);
+        const variations = [
+          "centered hero composition with refined decorative framing",
+          "editorial close-up with layered supporting props",
+          "playful asymmetrical arrangement with unexpected scale changes",
+          "premium flat-lay composition with polished surface details",
+          "dramatic spotlight scene with elevated material contrast",
+          "whimsical floating arrangement with strong negative space",
+          "luxury boutique-inspired scene with styled miniature props",
+          "bold pattern-led composition with a different motif rhythm",
+          "close-up product-style composition with tactile textures",
+          "final statement design with a surprising mashup of compatible Halloween details",
+        ];
+        variations.forEach((v, i) => {
+          lines.push(`DESIGN ${i + 1}:`);
+          lines.push(
+            `Create one standalone ${designType === "None" ? "Halloween artwork" : designType} using the selected ${preset === "None" ? "Halloween creative direction" : preset + " concept"}. Use ${data["Main Subject"] === "None" ? "an imaginative Halloween focal subject" : data["Main Subject"]} as the main focus. Style it with ${data["Aesthetic"]}, ${data["Art Style"]}, and ${data["Mood"]} qualities. Use ${data["Color Palette"]} colors, ${data["Material"]} materials, ${data["Texture"]} textures, ${data["Surface Finish"]} finish, and ${data["Lighting"]} lighting. Build a ${v}. Background: ${data["Background Style"]}. Supporting elements: ${data["Supporting Elements"]}; decorative accents: ${data["Decorative Elements"]}; seasonal props: ${data["Seasonal Props"]}. Composition: ${data["Composition"]}; layout: ${data["Layout"]}. Orientation: ${data["Image Orientation"]}; aspect ratio: ${data["Aspect Ratio"]}. Make this design visually distinct from the other nine while preserving the same collection identity. Generate this image separately on its own canvas.`,
+          );
+          lines.push(``);
+        });
+        if (remix) {
+          lines.push(
+            `REMIX INSTRUCTION: Keep the same core concept and selected settings, but reinterpret the collection with fresh compositions, newly arranged supporting details, alternate lighting direction, and different premium material combinations. Do not merely change colors.`,
+          );
+        }
+        return lines.join("\n");
+      }
+
+      document
+        .getElementById("generateBtn")
+        .addEventListener(
+          "click",
+          () => (document.getElementById("output").value = buildPrompt(false)),
+        );
+      document
+        .getElementById("remixBtn")
+        .addEventListener(
+          "click",
+          () => (document.getElementById("output").value = buildPrompt(true)),
+        );
+      document.getElementById("surpriseBtn").addEventListener("click", () => {
+        randomize();
+        document.getElementById("output").value = buildPrompt(false);
+      });
+      document.getElementById("resetBtn").addEventListener("click", resetAll);
+      document.getElementById("copyBtn").addEventListener("click", async () => {
+        const out = document.getElementById("output");
+        if (!out.value) out.value = buildPrompt(false);
+        await navigator.clipboard.writeText(out.value);
+        const b = document.getElementById("copyBtn");
+        const old = b.textContent;
+        b.textContent = "Copied ✓";
+        setTimeout(() => (b.textContent = old), 1200);
+      });
+
+      document.addEventListener("click", (e) => {
+        document.querySelectorAll(".multi-menu.open").forEach((m) => {
+          if (!m.parentElement.contains(e.target)) m.classList.remove("open");
+        });
+      });
+    </script>
+  </body>
+</html>
